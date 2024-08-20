@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sliders/home.dart';
+import 'package:sliders/indicator.dart';
 import 'package:sliders/introduction.dart';
 // import 'package:';
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: IntroSliders(),
+      home: MyPercentIndicator(),
       debugShowCheckedModeBanner: false,
     );
   }

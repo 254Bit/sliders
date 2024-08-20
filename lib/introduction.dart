@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intro_slider/intro_slider.dart';
+import 'package:sliders/animated_widget.dart';
+import 'package:sliders/each_page.dart';
 
 class IntroSliders extends StatefulWidget {
   const IntroSliders({super.key});
@@ -9,35 +10,66 @@ class IntroSliders extends StatefulWidget {
 }
 
 class _IntroSlidersState extends State<IntroSliders> {
-  double _sliderValue = 0.5;
+  //Controller for the PageView
+  PageController controller = PageController();
+  final messages = ['First Screen', 'Second Screen', 'Third Screen'];
+  final images = ['assets/abc.jpeg', 'assets/Plant.png', 'assets/xyz'];
+
+  int numberOfPages = 3;
+  int currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'Slider Value: ${_sliderValue.toStringAsFixed(1)}',
-            style: const TextStyle(fontSize: 18.0),
-          ),
-          const SizedBox(height: 20.0),
-          Slider(
-            value: _sliderValue,
-            min: 0,
-            max: 50,
-            divisions: 30,
-            onChanged: (double value) {
+        body: Stack(
+      children: [
+        PageView.builder(
+            controller: controller,
+            onPageChanged: (index) {
               setState(() {
-                _sliderValue = value;
+                currentPage = index;
               });
             },
-            activeColor: Colors.green,
-            inactiveColor: Colors.grey,
-          ),
-        ],
-      )),
-    );
-  }
+            itemCount: numberOfPages,
+            itemBuilder: (BuildContext context, int index) {
+              return EachPage(messages[index], images[index]);
+            }
+            ),
+             Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                height: 50,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Flexible(child: Container()),
+                    Flexible(child: Indicator(
+                      controller: controller,
+                    )),
+                    Flexible(child: (currentPage==numberOfPages-1)?
+                    GestureDetector(
+                      onTap: (){},
+                      child: Center(
+                        child: ElevatedButton(
+                        onPressed:(){},
+                        child: const Text('Login', style: TextStyle(fontWeight: FontWeight.bold)),
+                        )
+                      )
+                    ):
+                        GestureDetector(
+                          onTap: (){
+                            controller.jumpToPage(numberOfPages-1);
+                          },
+                        
+                        child: const Center(child: 
+                        Text('Skip', style:
+                        TextStyle(fontWeight: FontWeight.bold)),)
+                      ),)
+                  ],)
+                      ),
+                    ),
+                    ],
+                    ),
+                );
 }
+  }
