@@ -10,6 +10,7 @@ class MyPercentIndicator extends StatefulWidget {
 }
 
 class _MyPercentIndicatorState extends State<MyPercentIndicator> {
+  double percent = 20;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,33 +27,27 @@ class _MyPercentIndicatorState extends State<MyPercentIndicator> {
           children: [
             CircularPercentIndicator(
               radius: 60,
-              percent: 0.3,
+              percent: percent/100,
               animation: true,
               lineWidth: 15,
               animateFromLastPercent: true,
-              center: const Text('30%'),
+              center: Text('${percent.toStringAsFixed(0)}%'),
               progressColor: Colors.amberAccent,
-              ),
-              LinearPercentIndicator(
-                 padding: const EdgeInsets.symmetric(horizontal:48),
-                lineHeight: 15,
-                percent: 0.2,
-                center: const Text ('20%'),
-                barRadius: const Radius.circular(5),
-                progressColor: Colors.amberAccent,
-                animation: true,
-                animateFromLastPercent: true,
-              ),
-
+            ),
+            LinearPercentIndicator(
+              padding: const EdgeInsets.symmetric(horizontal: 48),
+              lineHeight: 15,
+              percent: percent/100,
+              center: Text('${percent.toStringAsFixed(0)}%',
+              style: const TextStyle(fontSize: 12)),
+              barRadius: const Radius.circular(5),
+              progressColor: Colors.amberAccent,
+              animation: true,
+              animateFromLastPercent: true,
+            ),
           ],
         ),
       ),
-
-
-
-
-
-
     );
   }
 }
